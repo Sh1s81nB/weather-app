@@ -1,0 +1,39 @@
+CREATE TABLE WeatherEntityData (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    latitude REAL NOT NULL,
+    longitude REAL NOT NULL,
+    generationTimeMs REAL NOT NULL,
+    utcOffsetSeconds INTEGER NOT NULL,
+    timezone TEXT NOT NULL,
+    timezoneAbbreviation TEXT NOT NULL,
+    elevation REAL NOT NULL,
+    temperature TEXT NOT NULL,
+    windSpeed TEXT NOT NULL,
+    windDirection TEXT NOT NULL,
+    weatherCode TEXT NOT NULL,
+    isDay INTEGER NOT NULL,
+    time TEXT NOT NULL
+);
+
+insertWeatherData:
+INSERT INTO WeatherEntityData(
+    latitude,
+    longitude,
+    generationTimeMs,
+    utcOffsetSeconds,
+    timezone,
+    timezoneAbbreviation,
+    elevation,
+    temperature,
+    windSpeed,
+    windDirection,
+    weatherCode,
+    isDay,
+    time
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+getAllWeatherData:
+SELECT * FROM WeatherEntityData;
+
+getWeatherDataById:
+SELECT * FROM WeatherEntityData WHERE id = ?;
