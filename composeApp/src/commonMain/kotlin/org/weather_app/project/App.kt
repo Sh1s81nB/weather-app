@@ -7,7 +7,9 @@ import org.koin.compose.KoinApplication
 import org.weather_app.project.commonconfigs.Context
 import org.weather_app.project.core.data.di.dataModule
 import org.weather_app.project.core.network.di.networkModule
+import org.weather_app.project.core.session.di.sessionModule
 import org.weather_app.project.database.di.databaseModule
+import org.weather_app.project.features.permissions.di.permissionModule
 import org.weather_app.project.features.weather.di.weatherModule
 import org.weather_app.project.features.weatherhistory.di.weatherHistoryModule
 import org.weather_app.project.navigation.AppNavHost
@@ -22,7 +24,9 @@ fun App(context: Context) {
                 networkModule(context),
                 weatherModule,
                 databaseModule(context),
-                weatherHistoryModule
+                weatherHistoryModule,
+                permissionModule(context),
+                sessionModule
             )
         }
     ){

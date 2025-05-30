@@ -1,0 +1,8 @@
+<resources>
+    <string name="location">Location</string>
+    <string name="location_description">This app requires location permission to function properly.</string>
+    <string name="device_permission">Device Permissions</string>
+    <string name="device_permission_description">This app requires device permissions to function properly.</string>
+    <string name="accept">Accept</string>
+    <string name="permission">Permission</string>
+</resources>

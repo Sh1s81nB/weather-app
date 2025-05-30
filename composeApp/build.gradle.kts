@@ -45,6 +45,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.bundles.ktor.android)
             implementation("app.cash.sqldelight:android-driver:2.0.2")
+            implementation("com.google.accompanist:accompanist-permissions:0.35.1-alpha")
         }
         commonMain.dependencies {
             implementation(compose.runtime)

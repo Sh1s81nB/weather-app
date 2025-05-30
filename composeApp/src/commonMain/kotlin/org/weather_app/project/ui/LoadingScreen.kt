@@ -10,7 +10,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.semantics.semantics
 
 @Composable
-fun LoadingScreen(modifier: Modifier){
+fun LoadingScreen(modifier: Modifier = Modifier){
     Box(
         modifier = modifier.fillMaxSize().semantics(mergeDescendants = false) {}
             .pointerInput(Unit) {},
