@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.serialization)
     id("app.cash.sqldelight") version "2.0.2"
+    id("com.google.gms.google-services")
 }
 
 kotlin {
