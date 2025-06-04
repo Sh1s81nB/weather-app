@@ -35,6 +35,7 @@ jobs:
           -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
           -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
           -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+          --stacktrace --info --debug
 
       - name: Install Firebase CLI
         run: |
