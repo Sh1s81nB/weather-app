@@ -18,10 +18,6 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Decrypt keystore
-        run: |
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > composeApp/keystore.jks
-
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
 
@@ -31,11 +27,6 @@ jobs:
       - name: Build release APK
         run: |
           ./gradlew assembleRelease \
-          -Pandroid.injected.signing.store.file=keystore.jks \
-          -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
-          -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
-          -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
-          --stacktrace --info --debug
 
       - name: Install Firebase CLI
         run: |
