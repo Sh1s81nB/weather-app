@@ -36,5 +36,5 @@ jobs:
         run: |
           firebase appdistribution:distribute composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk \
           --app 1:798182551706:android:1d8bc022b5bd717b25ef23 \
-          --groups shashankhr018@gmail.com \
+          --testers shashankhr018@gmail.com \
           --token ${{ secrets.FIREBASE_TOKEN }}
