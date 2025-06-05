@@ -34,7 +34,7 @@ jobs:
 
       - name: Upload to Firebase App Distribution
         run: |
-          firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
+          firebase appdistribution:distribute composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk \
           --app 1:798182551706:android:1d8bc022b5bd717b25ef23 \
           --groups shashankhr018@gmail.com \
           --token ${{ secrets.FIREBASE_TOKEN }}
