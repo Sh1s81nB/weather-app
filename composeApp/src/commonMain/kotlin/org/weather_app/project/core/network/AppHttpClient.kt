@@ -16,7 +16,7 @@ import kotlinx.serialization.json.Json
 import org.weather_app.project.commonconfigs.Context
 
 class AppHttpClient(
-    private val context: Context
+    private val context: Context? = null
 ) {
     @OptIn(ExperimentalSerializationApi::class)
     fun httpClient() = HttpClient(
@@ -63,6 +63,6 @@ class AppHttpClient(
 
 
 
-expect fun providePlatformEngine(context: Context): HttpClientEngine
+expect fun providePlatformEngine(context: Context?): HttpClientEngine
 
 expect fun HttpClientConfig<*>.platformConfig()

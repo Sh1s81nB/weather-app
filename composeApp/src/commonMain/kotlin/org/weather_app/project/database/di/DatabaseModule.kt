@@ -4,7 +4,7 @@ import org.koin.dsl.module
 import org.weather_app.project.commonconfigs.Context
 import org.weather_app.project.database.AppDataBase
 
-fun databaseModule(context: Context) = module {
+fun databaseModule(context: Context?) = module {
     includes(databasePlatformModule(context))
     single { AppDataBase(get()) }
 }

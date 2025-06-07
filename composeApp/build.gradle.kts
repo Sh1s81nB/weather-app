@@ -28,6 +28,10 @@ kotlin {
             baseName = "ComposeApp"
             isStatic = true
         }
+
+        iosTarget.binaries.all {
+            linkerOpts("-lsqlite3")
+        }
     }
 
     sqldelight {
@@ -62,6 +66,8 @@ kotlin {
         }
         iosMain.dependencies {
             implementation("app.cash.sqldelight:native-driver:2.0.2")
+            implementation(libs.bundles.ktor.ios)
+            implementation(compose.material3)
         }
         jvmMain.dependencies {
             implementation("app.cash.sqldelight:sqlite-driver:2.0.2")
