@@ -16,7 +16,7 @@ import org.weather_app.project.navigation.AppNavHost
 
 @Composable
 @Preview
-fun App(context: Context?) {
+fun App(context: Context) {
     KoinApplication(
         application = {
             modules(
