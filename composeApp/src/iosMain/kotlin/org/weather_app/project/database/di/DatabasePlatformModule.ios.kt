@@ -6,6 +6,6 @@ import org.koin.dsl.module
 import org.weather_app.project.commonconfigs.Context
 import org.weather_app.project.database.DriverFactory
 
-internal actual fun databasePlatformModule(context: Context?): Module = module {
+internal actual fun databasePlatformModule(context: Context): Module = module {
     single<SqlDriver> { DriverFactory().createDriver() }
 }

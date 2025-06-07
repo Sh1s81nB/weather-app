@@ -1,3 +1,5 @@
 package org.weather_app.project.commonconfigs
 
-actual class Context
+import platform.darwin.NSObject
+
+actual typealias Context = NSObject

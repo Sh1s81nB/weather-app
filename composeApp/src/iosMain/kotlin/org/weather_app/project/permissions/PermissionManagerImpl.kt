@@ -8,9 +8,7 @@ import platform.CoreLocation.CLLocationManager
 import platform.CoreLocation.kCLAuthorizationStatusDenied
 import platform.CoreLocation.kCLAuthorizationStatusNotDetermined
 
-class PermissionManagerImpl internal constructor(
-
-) : PermissionManager {
+class PermissionManagerImpl : PermissionManager {
     private val delegate = LocationManagerDelegate()
 
     override fun getPendingPermissions(): List<Permission> {
