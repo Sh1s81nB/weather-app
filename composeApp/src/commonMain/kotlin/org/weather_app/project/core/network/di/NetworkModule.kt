@@ -7,7 +7,7 @@ import org.weather_app.project.core.network.AppNetwork
 import org.weather_app.project.core.network.AppNetworkImpl
 import org.weather_app.project.core.network.util.ResponseHandler
 
-fun networkModule(context: Context?) = module {
+fun networkModule(context: Context) = module {
     single { AppHttpClient(context).httpClient() }
     single<AppNetwork> { AppNetworkImpl(get()) }
     single { ResponseHandler() }

@@ -6,7 +6,7 @@ import io.ktor.client.engine.okhttp.OkHttp
 import okhttp3.OkHttpClient
 import org.weather_app.project.commonconfigs.Context
 
-actual fun providePlatformEngine(context: Context?): HttpClientEngine = OkHttp.create {
+actual fun providePlatformEngine(context: Context): HttpClientEngine = OkHttp.create {
     val okHttpClient = OkHttpClient.Builder()
     preconfigured = okHttpClient.build()
 }

@@ -9,10 +9,9 @@ import org.weather_app.project.features.permissions.domain.Permission
 import kotlin.time.Duration.Companion.seconds
 
 class PermissionManagerImpl(
-    private val context: Context? = null
+    private val context: Context
 ): PermissionManager, PermissionProvider {
     override fun getPendingPermissions(): List<Permission> {
-        requireNotNull(context) { "Context must not be null on Android" }
         return Permission.entries.filter {
             getPermissions(it.permissionType).any { permission ->
                 ContextCompat.checkSelfPermission(
