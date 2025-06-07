@@ -3,6 +3,8 @@ package org.weather_app.project.navigation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavHostController
@@ -105,11 +107,14 @@ fun HandlePendingPermissions(
     permissionManager: PermissionManager,
     navController: NavHostController
 ) {
-    if (shouldRequestPermissions(
-        lifecycleEvent = lifecycleEvent,
-        sessionManager = sessionManager,
-        permissionManager = permissionManager
-    )) {
+    val shouldRequestPermissions by produceState(initialValue = false, lifecycleEvent, sessionManager, permissionManager) {
+        value = shouldRequestPermissions(
+            lifecycleEvent = lifecycleEvent,
+            sessionManager = sessionManager,
+            permissionManager = permissionManager
+        )
+    }
+    if (shouldRequestPermissions) {
         PermissionScreenRoute(
             onAllPermissionsGranted = {
                 navController.navigateToWeatherScreen(
@@ -125,7 +130,7 @@ fun HandlePendingPermissions(
     }
 }
 
-private fun shouldRequestPermissions(
+private suspend fun shouldRequestPermissions(
     lifecycleEvent: Lifecycle.Event,
     sessionManager: SessionManager,
     permissionManager: PermissionManager

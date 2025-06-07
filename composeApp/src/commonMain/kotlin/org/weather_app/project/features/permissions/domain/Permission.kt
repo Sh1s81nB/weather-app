@@ -7,6 +7,8 @@ import weather_app.composeapp.generated.resources.Res
 import weather_app.composeapp.generated.resources.location
 import weather_app.composeapp.generated.resources.location_description
 import weather_app.composeapp.generated.resources.map
+import weather_app.composeapp.generated.resources.notification
+import weather_app.composeapp.generated.resources.notification_description
 
 enum class Permission(
     val icon: DrawableResource,
@@ -20,4 +22,10 @@ enum class Permission(
         description = Res.string.location_description,
         permissionType = PermissionType.LOCATION
     ),
+    NOTIFICATION(
+        icon = Res.drawable.notification,
+        permissionName = Res.string.notification,
+        description = Res.string.notification_description,
+        permissionType = PermissionType.NOTIFICATION
+    );
 }

@@ -16,4 +16,7 @@
     <string name="change_language">ಭಾಷೆ ಬದಲಾಯಿಸಿ</string>
     <string name="choose_language">ಭಾಷೆ ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="apply">ಅನ್ವಯಿಸಿ</string>
+    <string name="notification">ಅಧಿಸೂಚನೆ</string>
+    <string name="notification_description">ಈ ಅಪ್ಲಿಕೇಶನ್ ಸರಿಯಾಗಿ ಕಾರ್ಯನಿರ್ವಹಿಸಲು ಅಧಿಸೂಚನೆ ಅನುಮತಿಯ ಅಗತ್ಯವಿದೆ.</string>
+
 </resources>

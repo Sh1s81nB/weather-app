@@ -16,8 +16,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -31,12 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.weather_app.project.features.language.domain.Language
 import weather_app.composeapp.generated.resources.Res
 import weather_app.composeapp.generated.resources.apply
-import weather_app.composeapp.generated.resources.back
 import weather_app.composeapp.generated.resources.change_language
 import weather_app.composeapp.generated.resources.choose_language
 

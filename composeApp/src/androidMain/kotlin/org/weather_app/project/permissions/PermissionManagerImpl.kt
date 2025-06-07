@@ -1,6 +1,8 @@
 package org.weather_app.project.permissions
 
 import android.content.pm.PackageManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -11,7 +13,7 @@ import kotlin.time.Duration.Companion.seconds
 class PermissionManagerImpl(
     private val context: Context
 ): PermissionManager, PermissionProvider {
-    override fun getPendingPermissions(): List<Permission> {
+    override suspend fun getPendingPermissions(): List<Permission> {
         return Permission.entries.filter {
             getPermissions(it.permissionType).any { permission ->
                 ContextCompat.checkSelfPermission(
@@ -32,7 +34,7 @@ class PermissionManagerImpl(
         requestPermissions.emit(false)
     }
 
-    override fun isAnyPendingPermission(): Boolean {
+    override suspend fun isAnyPendingPermission(): Boolean {
         return getPendingPermissions().isNotEmpty()
     }
 
@@ -42,6 +44,13 @@ class PermissionManagerImpl(
                 android.Manifest.permission.ACCESS_FINE_LOCATION,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION
             )
+            PermissionType.NOTIFICATION -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                listOf(
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                )
+            } else {
+                emptyList()
+            }
         }
     }
 

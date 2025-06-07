@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
@@ -20,6 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import org.koin.core.context.stopKoin
+import org.weather_app.project.features.permissions.domain.Permission
 import org.weather_app.project.permissions.PermissionManagerImpl
 
 class MainActivity : ComponentActivity() {
@@ -52,7 +54,9 @@ fun HandlePermission(
     val shouldRequestPermissions by PermissionManagerImpl.requestPermissions.collectAsStateWithLifecycle(
         initialValue = false
     )
-    val pendingPermissions = permissionManager.getPendingPermissions()
+    val pendingPermissions by produceState(initialValue = emptyList<Permission>()) {
+        value = permissionManager.getPendingPermissions()
+    }
 
     val permissionState = rememberMultiplePermissionsState(
         permissions = pendingPermissions.map { permissionManager.getPermissions(it.permissionType) }

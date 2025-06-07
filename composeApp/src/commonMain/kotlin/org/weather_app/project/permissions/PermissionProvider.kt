@@ -6,4 +6,5 @@ interface PermissionProvider{
 
 enum class PermissionType {
     LOCATION,
+    NOTIFICATION
 }

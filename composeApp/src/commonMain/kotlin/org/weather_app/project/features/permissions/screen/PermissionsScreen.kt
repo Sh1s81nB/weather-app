@@ -23,9 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,7 +31,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-import org.weather_app.project.features.language.LanguageScreenRoute
 import org.weather_app.project.features.permissions.domain.Permission
 import org.weather_app.project.ui.LoadingScreen
 import weather_app.composeapp.generated.resources.Res
@@ -42,7 +38,6 @@ import weather_app.composeapp.generated.resources.accept
 import weather_app.composeapp.generated.resources.change_language
 import weather_app.composeapp.generated.resources.device_permission
 import weather_app.composeapp.generated.resources.device_permission_description
-import weather_app.composeapp.generated.resources.map
 import weather_app.composeapp.generated.resources.permission
 
 @Composable
@@ -179,7 +174,7 @@ fun PermissionItem(
         ) {
             Image(
                 modifier = Modifier.size(24.dp),
-                painter = painterResource(Res.drawable.map),
+                painter = painterResource(permission.icon),
                 contentDescription = null
             )
             Spacer(modifier = Modifier.width(16.dp))
