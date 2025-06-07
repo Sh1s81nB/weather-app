@@ -23,6 +23,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,10 +34,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
+import org.weather_app.project.features.language.LanguageDialog
 import org.weather_app.project.features.permissions.domain.Permission
 import org.weather_app.project.ui.LoadingScreen
 import weather_app.composeapp.generated.resources.Res
 import weather_app.composeapp.generated.resources.accept
+import weather_app.composeapp.generated.resources.change_language
 import weather_app.composeapp.generated.resources.device_permission
 import weather_app.composeapp.generated.resources.device_permission_description
 import weather_app.composeapp.generated.resources.map
@@ -113,11 +118,33 @@ fun PermissionScreenContent(
     permissions: List<Permission>,
     paddingValues: PaddingValues
 ){
+    var openLanguageSelectionDialog by rememberSaveable { mutableStateOf(false) }
+    if (openLanguageSelectionDialog) {
+        LanguageDialog(
+            onDismiss = {
+                openLanguageSelectionDialog = false
+            }
+        )
+    }
     LazyColumn(
         modifier = Modifier.padding(paddingValues)
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ){
+                Button(
+                    onClick = {
+                        openLanguageSelectionDialog = true
+                    },
+                ) {
+                    Text(stringResource(Res.string.change_language))
+                }
+            }
+        }
         item {
             Column {
                 Text(

@@ -5,4 +5,15 @@
     <string name="device_permission_description">This app requires device permissions to function properly.</string>
     <string name="accept">Accept</string>
     <string name="permission">Permission</string>
+    <string name="weather_screen">Weather Screen</string>
+    <string name="time">Time</string>
+    <string name="temperature">Temperature</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="wind_direction">Wind Direction</string>
+    <string name="weather_code">Weather Code</string>
+    <string name="refresh">Refresh</string>
+    <string name="weather_history">Weather History</string>
+    <string name="change_language">Change Language</string>
+    <string name="choose_language">Choose Language</string>
+    <string name="apply">Apply</string>
 </resources>

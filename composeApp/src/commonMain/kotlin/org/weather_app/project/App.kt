@@ -9,6 +9,7 @@ import org.weather_app.project.core.data.di.dataModule
 import org.weather_app.project.core.network.di.networkModule
 import org.weather_app.project.core.session.di.sessionModule
 import org.weather_app.project.database.di.databaseModule
+import org.weather_app.project.features.language.di.languageModule
 import org.weather_app.project.features.permissions.di.permissionModule
 import org.weather_app.project.features.weather.di.weatherModule
 import org.weather_app.project.features.weatherhistory.di.weatherHistoryModule
@@ -26,7 +27,8 @@ fun App(context: Context) {
                 databaseModule(context),
                 weatherHistoryModule,
                 permissionModule(context),
-                sessionModule
+                sessionModule,
+                languageModule(context)
             )
         }
     ){

@@ -22,11 +22,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.weather_app.project.ui.ErrorScreen
 import org.weather_app.project.ui.LoadingScreen
 import org.weatherapp.project.database.WeatherEntityData
 import weather_app.composeapp.generated.resources.Res
 import weather_app.composeapp.generated.resources.back
+import weather_app.composeapp.generated.resources.temperature
+import weather_app.composeapp.generated.resources.time
+import weather_app.composeapp.generated.resources.weather_history
+import weather_app.composeapp.generated.resources.wind_speed
 
 @Composable
 fun WeatherHistoryScreenRoute(
@@ -51,7 +56,7 @@ fun WeatherHistoryScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Weather History",
+                        text = stringResource(Res.string.weather_history),
                         style = MaterialTheme.typography.headlineMedium
                     )
                 },
@@ -107,7 +112,7 @@ fun WeatherHistoryContent(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = "Time",
+                    text = stringResource(Res.string.time),
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
@@ -120,7 +125,7 @@ fun WeatherHistoryContent(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = "Temperature",
+                    text = stringResource(Res.string.temperature),
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
