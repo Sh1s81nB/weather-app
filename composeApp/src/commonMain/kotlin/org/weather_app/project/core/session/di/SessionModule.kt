@@ -7,6 +7,6 @@ import org.weather_app.project.core.session.SessionManagerImpl
 
 val sessionModule: Module = module {
     single<SessionManager> {
-        SessionManagerImpl(get())
+        SessionManagerImpl(get(), get())
     }
 }

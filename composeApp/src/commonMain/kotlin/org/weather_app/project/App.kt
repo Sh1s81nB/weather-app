@@ -6,6 +6,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import org.weather_app.project.commonconfigs.Context
 import org.weather_app.project.core.data.di.dataModule
+import org.weather_app.project.core.datastore.di.dataStoreModule
 import org.weather_app.project.core.network.di.networkModule
 import org.weather_app.project.core.session.di.sessionModule
 import org.weather_app.project.database.di.databaseModule
@@ -28,7 +29,8 @@ fun App(context: Context) {
                 weatherHistoryModule,
                 permissionModule(context),
                 sessionModule,
-                languageModule(context)
+                languageModule(context),
+                dataStoreModule(context)
             )
         }
     ){

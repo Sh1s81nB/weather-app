@@ -13,6 +13,11 @@ import org.koin.compose.koinInject
 import org.weather_app.project.common.rememberLifecycleEvent
 import org.weather_app.project.core.session.SessionManager
 import org.weather_app.project.core.session.model.InitialScreen
+import org.weather_app.project.features.language.navigation.languageRoute
+import org.weather_app.project.features.language.navigation.languageScreen
+import org.weather_app.project.features.language.navigation.navigateToLanguage
+import org.weather_app.project.features.language.navigation.paramShouldNavigateBack
+import org.weather_app.project.features.permissions.navigation.navigateToPermission
 import org.weather_app.project.features.permissions.navigation.permissionRoute
 import org.weather_app.project.features.permissions.navigation.permissionScreen
 import org.weather_app.project.features.permissions.screen.PermissionScreenRoute
@@ -43,6 +48,7 @@ fun AppNavHost(
             modifier = Modifier.fillMaxSize(),
             navController = navController,
             startDestination = when(sessionManager.initialScreen){
+                InitialScreen.Language -> "$languageRoute/{$paramShouldNavigateBack}"
                 InitialScreen.Permission -> permissionRoute
                 else -> WEATHER_SCREEN_ROUTE
             }
@@ -52,18 +58,35 @@ fun AppNavHost(
                     navController.navigateToWeatherScreen(
                         navOptions = removeFromBackstack(permissionRoute)
                     )
+                },
+                navigateToLanguageScreen = {
+                    navController.navigateToLanguage(
+                        shouldNavigateBack = true
+                    )
                 }
             )
             weatherScreen(
                 navigateToWeatherHistory = {
                     navController.navigateToWeatherHistory()
+                },
+                navigateToLanguageScreen = {
+                    navController.navigateToLanguage(
+                        shouldNavigateBack = true
+                    )
                 }
             )
 
             weatherHistoryScreen(
-                onBack = {
-                    navController.popBackStack()
-                }
+                onBack = navController::navigateUp
+            )
+
+            languageScreen(
+                navigateUp = {
+                    navController.navigateToPermission(
+                        navOptions = removeFromBackstack("$languageRoute/{$paramShouldNavigateBack}")
+                    )
+                },
+                navigateBack = navController::navigateUp
             )
         }
     }
@@ -91,6 +114,11 @@ fun HandlePendingPermissions(
             onAllPermissionsGranted = {
                 navController.navigateToWeatherScreen(
                     navOptions = removeFromBackstack(permissionRoute)
+                )
+            },
+            navigateToLanguageScreen = {
+                navController.navigateToLanguage(
+                    shouldNavigateBack = true
                 )
             }
         )

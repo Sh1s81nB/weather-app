@@ -1,16 +1,25 @@
 package org.weather_app.project.features.language
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import org.weather_app.project.core.datastore.AppDataStore
 import org.weather_app.project.features.language.domain.Language
-import org.weather_app.project.features.weather.screen.WeatherScreenUiState
+import org.weather_app.project.features.language.navigation.paramShouldNavigateBack
 
 class LanguageViewModel(
-    private val localeManager: LocaleManager
+    private val localeManager: LocaleManager,
+    private val appDataStore: AppDataStore,
+    savedStateHandle: SavedStateHandle
 ): ViewModel() {
+    val shouldNavigateBack = savedStateHandle.get<Boolean>(paramShouldNavigateBack) == true
     private val _uiState = MutableStateFlow<LanguageUiState>(
         LanguageUiState.LanguageList(
             languages = Language.entries.toList(),
@@ -47,6 +56,17 @@ class LanguageViewModel(
         _uiState.value = state.copy(
             selectedLanguage = language
         )
+    }
+
+    override fun onCleared() {
+        setLanguageSelectionVisited()
+        super.onCleared()
+    }
+
+    fun setLanguageSelectionVisited() {
+        CoroutineScope(Dispatchers.IO).launch {
+            appDataStore.setLanguageSelectionVisited(true)
+        }
     }
 }
 

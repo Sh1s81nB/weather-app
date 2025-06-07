@@ -31,11 +31,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.weather_app.project.features.language.LanguageDialog
+import org.weather_app.project.features.language.LanguageScreenRoute
 import org.weather_app.project.ui.ErrorScreen
 import org.weather_app.project.ui.LoadingScreen
 import weather_app.composeapp.generated.resources.Res
-import weather_app.composeapp.generated.resources.apply
 import weather_app.composeapp.generated.resources.change_language
 import weather_app.composeapp.generated.resources.history
 import weather_app.composeapp.generated.resources.refresh
@@ -50,13 +49,15 @@ import weather_app.composeapp.generated.resources.wind_speed
 @Composable
 fun WeatherScreenRoute(
     viewModel: WeatherScreenViewModel,
-    navigateToWeatherHistory: () -> Unit
+    navigateToWeatherHistory: () -> Unit,
+    navigateToLanguageScreen: () -> Unit
 ){
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     WeatherScreen(
         sync = viewModel::sync,
         uiState = uiState,
-        navigateToWeatherHistory = navigateToWeatherHistory
+        navigateToWeatherHistory = navigateToWeatherHistory,
+        navigateToLanguageScreen = navigateToLanguageScreen
     )
 }
 
@@ -65,7 +66,8 @@ fun WeatherScreenRoute(
 fun WeatherScreen(
     sync: () -> Unit,
     uiState: WeatherScreenUiState,
-    navigateToWeatherHistory: () -> Unit
+    navigateToWeatherHistory: () -> Unit,
+    navigateToLanguageScreen: () -> Unit
 ) {
     Scaffold(
         containerColor = Color.LightGray,
@@ -111,7 +113,8 @@ fun WeatherScreen(
             is WeatherScreenUiState.Success -> {
                 WeatherScreenContent(
                     uiState = uiState,
-                    modifier = Modifier.padding(it)
+                    modifier = Modifier.padding(it),
+                    navigateToLanguageScreen = navigateToLanguageScreen
                 )
             }
             WeatherScreenUiState.Loading -> {
@@ -130,16 +133,9 @@ fun WeatherScreen(
 @Composable
 fun WeatherScreenContent(
     modifier: Modifier,
-    uiState: WeatherScreenUiState.Success
+    uiState: WeatherScreenUiState.Success,
+    navigateToLanguageScreen: () -> Unit
 ){
-    var openLanguageSelectionDialog by rememberSaveable { mutableStateOf(false) }
-    if (openLanguageSelectionDialog) {
-        LanguageDialog(
-            onDismiss = {
-                openLanguageSelectionDialog = false
-            }
-        )
-    }
     Column(
         modifier = modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -147,7 +143,7 @@ fun WeatherScreenContent(
     ) {
         Button(
             onClick = {
-                openLanguageSelectionDialog = true
+                navigateToLanguageScreen()
             },
             modifier = Modifier.align(Alignment.End)
         ) {

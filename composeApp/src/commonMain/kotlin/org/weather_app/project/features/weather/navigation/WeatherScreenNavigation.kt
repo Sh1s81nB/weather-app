@@ -18,12 +18,14 @@ fun NavController.navigateToWeatherScreen(
 
 @OptIn(KoinExperimentalAPI::class)
 fun NavGraphBuilder.weatherScreen(
-    navigateToWeatherHistory: () -> Unit
+    navigateToWeatherHistory: () -> Unit,
+    navigateToLanguageScreen: () -> Unit
 ) {
     composable(WEATHER_SCREEN_ROUTE) {
         WeatherScreenRoute(
             viewModel = koinViewModel(),
-            navigateToWeatherHistory = navigateToWeatherHistory
+            navigateToWeatherHistory = navigateToWeatherHistory,
+            navigateToLanguageScreen = navigateToLanguageScreen
         )
     }
 }

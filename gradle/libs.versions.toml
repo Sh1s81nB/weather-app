@@ -17,6 +17,7 @@ serialization = "1.6.3"
 koin = "3.6.0-Beta4"
 koin-compose = "1.2.0-Beta4"
 ktor = "2.3.7"
+androidx-datastore = "1.1.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -32,6 +33,8 @@ androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:life
 androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
+androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "androidx-datastore" }
 
 #koin
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
@@ -80,3 +83,8 @@ ktor-common = [
 ktor-android = ["ktor-okhttp"]
 
 ktor-ios = ["ktor-ios-client"]
+
+datastore-common = [
+  "androidx-datastore-preferences",
+  "androidx-datastore-preferences-core"
+]

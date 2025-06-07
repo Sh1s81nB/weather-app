@@ -34,7 +34,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-import org.weather_app.project.features.language.LanguageDialog
+import org.weather_app.project.features.language.LanguageScreenRoute
 import org.weather_app.project.features.permissions.domain.Permission
 import org.weather_app.project.ui.LoadingScreen
 import weather_app.composeapp.generated.resources.Res
@@ -48,13 +48,15 @@ import weather_app.composeapp.generated.resources.permission
 @Composable
 fun PermissionScreenRoute(
     viewModel: PermissionViewModel = koinInject(),
-    onAllPermissionsGranted: () -> Unit
+    onAllPermissionsGranted: () -> Unit,
+    navigateToLanguageScreen: () -> Unit
 ){
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     PermissionScreen(
         uiState = uiState,
         onAllPermissionsGranted = onAllPermissionsGranted,
-        acceptPendingPermissions = viewModel::acceptPendingPermissions
+        acceptPendingPermissions = viewModel::acceptPendingPermissions,
+        navigateToLanguageScreen = navigateToLanguageScreen
     )
 }
 
@@ -63,7 +65,8 @@ fun PermissionScreenRoute(
 fun PermissionScreen(
     uiState: PermissionUiState,
     onAllPermissionsGranted: () -> Unit,
-    acceptPendingPermissions: () -> Unit
+    acceptPendingPermissions: () -> Unit,
+    navigateToLanguageScreen: () -> Unit
 ) {
     Scaffold(
         containerColor = Color.LightGray,
@@ -106,7 +109,8 @@ fun PermissionScreen(
             is PermissionUiState.PendingPermissions -> {
                 PermissionScreenContent(
                     permissions = uiState.pendingPermissions,
-                    paddingValues = it
+                    paddingValues = it,
+                    navigateToLanguageScreen = navigateToLanguageScreen
                 )
             }
         }
@@ -116,16 +120,9 @@ fun PermissionScreen(
 @Composable
 fun PermissionScreenContent(
     permissions: List<Permission>,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    navigateToLanguageScreen: () -> Unit
 ){
-    var openLanguageSelectionDialog by rememberSaveable { mutableStateOf(false) }
-    if (openLanguageSelectionDialog) {
-        LanguageDialog(
-            onDismiss = {
-                openLanguageSelectionDialog = false
-            }
-        )
-    }
     LazyColumn(
         modifier = Modifier.padding(paddingValues)
             .padding(16.dp),
@@ -138,7 +135,7 @@ fun PermissionScreenContent(
             ){
                 Button(
                     onClick = {
-                        openLanguageSelectionDialog = true
+                        navigateToLanguageScreen()
                     },
                 ) {
                     Text(stringResource(Res.string.change_language))

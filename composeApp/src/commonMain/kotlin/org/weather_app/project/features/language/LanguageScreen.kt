@@ -14,10 +14,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -25,43 +30,79 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.koinInject
 import org.weather_app.project.features.language.domain.Language
 import weather_app.composeapp.generated.resources.Res
 import weather_app.composeapp.generated.resources.apply
+import weather_app.composeapp.generated.resources.back
+import weather_app.composeapp.generated.resources.change_language
 import weather_app.composeapp.generated.resources.choose_language
 
 @Composable
-fun LanguageDialog(
-    viewModel: LanguageViewModel = koinInject(),
-    onDismiss: () -> Unit
+fun LanguageScreenRoute(
+    viewModel: LanguageViewModel,
+    navigateUp: () -> Unit,
+    navigateBack: () -> Unit
 ){
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    LanguageDialogContent(
+    LanguageScreen(
         uiState = uiState,
         onLanguageSelected = viewModel::updateSelectedLanguage,
         onUiEvent = viewModel::uiEvent,
-        onDismiss = onDismiss
+        navigateBack = navigateBack,
+        navigateUp = {
+            viewModel.setLanguageSelectionVisited()
+            navigateUp()
+        },
+        shouldNavigateBack = viewModel.shouldNavigateBack,
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LanguageDialogContent(
+fun LanguageScreen(
     uiState: LanguageUiState,
     onLanguageSelected: (Language) -> Unit,
     onUiEvent: (LanguageUiEvent) -> Unit,
-    onDismiss: () -> Unit
+    navigateUp: () -> Unit,
+    navigateBack: () -> Unit,
+    shouldNavigateBack: Boolean,
 ){
     when(uiState){
         is LanguageUiState.LanguageList -> {
-            Dialog(
-                onDismissRequest = onDismiss
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = { Text(stringResource(Res.string.change_language)) }
+                    )
+                },
+                bottomBar = {
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(16.dp)
+                    ){
+                        Button(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = {
+                                onUiEvent(LanguageUiEvent.onConfirmClicked)
+                                if (shouldNavigateBack) {
+                                    navigateBack()
+                                } else {
+                                    navigateUp()
+                                }
+                            },
+                        ) {
+                            Text(stringResource(Res.string.apply))
+                        }
+                    }
+                }
             ) {
                 Card(
                     modifier = Modifier.fillMaxWidth()
+                        .padding(it)
+                        .padding(16.dp)
                 ){
                     Column {
                         LanguageOptionsCard(
@@ -69,16 +110,6 @@ fun LanguageDialogContent(
                             selectedLanguage = uiState.selectedLanguage,
                             onLanguageSelected = onLanguageSelected
                         )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Button(
-                            onClick = {
-                                onDismiss()
-                                onUiEvent(LanguageUiEvent.onConfirmClicked)
-                            },
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
-                        ) {
-                            Text(stringResource(Res.string.apply))
-                        }
                     }
                 }
             }

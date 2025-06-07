@@ -16,10 +16,12 @@ fun NavController.navigateToPermission(
 
 fun NavGraphBuilder.permissionScreen(
     onAllPermissionsGranted: () -> Unit,
+    navigateToLanguageScreen: () -> Unit
 ) {
     composable(permissionRoute) {
         PermissionScreenRoute(
-            onAllPermissionsGranted = onAllPermissionsGranted
+            onAllPermissionsGranted = onAllPermissionsGranted,
+            navigateToLanguageScreen = navigateToLanguageScreen
         )
     }
 }
