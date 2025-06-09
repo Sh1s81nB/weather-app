@@ -23,12 +23,6 @@ jobs:
         with:
             xcode-version: latest-stable
 
-      - name: Set up Ruby and install CocoaPods
-        run: |
-          sudo gem install cocoapods
-          cd iosApp
-          pod install
-
       - name: Set up provisioning and certificates
         run: |
           # Optional: If using automatic signing, pass -allowProvisioningUpdates in the build step
