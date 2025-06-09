@@ -1,0 +1,52 @@
+name: Build IOS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ios:
+    name: Build & Upload iOS IPA
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby and install CocoaPods
+        run: |
+          sudo gem install cocoapods
+          cd iosApp
+          pod install
+
+      - name: Set up provisioning and certificates
+        run: |
+          # Optional: If using automatic signing, pass -allowProvisioningUpdates in the build step
+          echo "Using automatic signing. Make sure your Xcode project is set to automatic signing."
+
+      - name: Build and Archive the App
+        run: |
+          xcodebuild -workspace iosApp/iosApp.xcworkspace \
+                     -scheme iosApp \
+                     -sdk iphoneos \
+                     -configuration Release \
+                     -archivePath build/iosApp.xcarchive \
+                     -allowProvisioningUpdates \
+                     clean archive
+
+      - name: Export the .ipa
+        run: |
+          xcodebuild -exportArchive \
+                     -archivePath build/iosApp.xcarchive \
+                     -exportOptionsPlist iosApp/ExportOptions.plist \
+                     -exportPath build \
+                     -allowProvisioningUpdates
+
+      - name: Install Firebase CLI
+        run: curl -sL https://firebase.tools | bash
+
+      - name: Upload iOS .ipa to Firebase App Distribution
+        run: |
+          firebase appdistribution:distribute build/iosApp.ipa \
+            --app ${{ secrets.FIREBASE_IOS_APP_ID }} \
+            --testers shashankhr018@gmail.com \
+            --token ${{ secrets.FIREBASE_TOKEN }}

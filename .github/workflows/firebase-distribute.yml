@@ -1,11 +1,11 @@
-name: Build & Distribute APK
+name: Build Android
 
 on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build & Upload to Firebase
+  android:
+    name: Build & Upload Android APK
     runs-on: ubuntu-latest
 
     steps:
@@ -29,18 +29,16 @@ jobs:
         run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > composeApp/keystore.jks
 
       - name: Build release APK
-        run: |
-          ./gradlew assembleRelease \
+        run: ./gradlew assembleRelease
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Install Firebase CLI
-        run: |
-          curl -sL https://firebase.tools | bash
+        run: curl -sL https://firebase.tools | bash
 
-      - name: Upload to Firebase App Distribution
+      - name: Upload Android to Firebase
         run: |
           firebase appdistribution:distribute composeApp/build/outputs/apk/release/composeApp-release.apk \
           --app ${{ secrets.FIREBASE_APP_ID }} \
