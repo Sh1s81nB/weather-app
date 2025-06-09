@@ -12,6 +12,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Select Xcode Version
+        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
+
       - name: Set up Ruby and install CocoaPods
         run: |
           sudo gem install cocoapods
