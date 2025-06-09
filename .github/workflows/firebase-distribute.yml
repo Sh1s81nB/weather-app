@@ -53,23 +53,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.1
-
-      - name: Install Fastlane
-        run: sudo gem install fastlane
-
-      - name: Build IPA with Fastlane
-        run: fastlane ios build
+      - name: Set up Xcode project
+        run: |
+          xcodebuild -scheme iosApp \
+                     -sdk iphoneos \
+                     -configuration Release \
+                     -archivePath build/iosApp.xcarchive \
+                     archive
+          
+          xcodebuild -exportArchive \
+                     -archivePath build/iosApp.xcarchive \
+                     -exportOptionsPlist iosApp/ExportOptions.plist \
+                     -exportPath build
 
       - name: Install Firebase CLI
         run: curl -sL https://firebase.tools | bash
 
       - name: Upload iOS to Firebase
         run: |
-          firebase appdistribution:distribute build/ios/iosApp.ipa \
+          firebase appdistribution:distribute build/iosApp.ipa \
           --app ${{ secrets.FIREBASE_IOS_APP_ID }} \
           --testers shashankhr018@gmail.com \
           --token ${{ secrets.FIREBASE_TOKEN }}
