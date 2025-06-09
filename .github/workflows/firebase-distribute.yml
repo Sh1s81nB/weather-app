@@ -55,7 +55,8 @@ jobs:
 
       - name: Set up Xcode project
         run: |
-          xcodebuild -scheme iosApp \
+          xcodebuild -workspace iosApp/iosApp.xcworkspace \
+                     -scheme iosApp \
                      -sdk iphoneos \
                      -configuration Release \
                      -archivePath build/iosApp.xcarchive \
