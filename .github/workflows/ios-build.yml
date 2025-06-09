@@ -42,6 +42,8 @@ jobs:
                      -configuration Debug \
                      -archivePath build/iosApp.xcarchive \
                      -allowProvisioningUpdates \
+                     PRODUCT_BUNDLE_IDENTIFIER=org.weatherapp.project.weather-app \
+                     PRODUCT_NAME=iosApp \
                      clean archive
 
       - name: Export the .ipa
