@@ -58,7 +58,7 @@ jobs:
           xcodebuild -workspace iosApp/iosApp.xcworkspace \
                      -scheme iosApp \
                      -sdk iphoneos \
-                     -configuration Release \
+                     -configuration Debug \
                      -archivePath build/iosApp.xcarchive \
                      archive
           
