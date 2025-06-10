@@ -56,7 +56,8 @@ jobs:
             --testers shashankhr018@gmail.com \
 
       - name: Upload IPA and dSYMs as Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
+
         with:
           name: ipa-and-symbols
           path: |
