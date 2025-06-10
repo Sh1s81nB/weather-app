@@ -12,46 +12,53 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
+
+      - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: 'gradle'
 
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-            xcode-version: latest-stable
+      - name: Select Xcode Version
+        run: sudo xcode-select -s /Applications/Xcode_14.2.app/Contents/Developer
 
-      - name: Set up provisioning and certificates
-        run: echo "Ensure automatic signing is set in Xcode project."
-
-      - name: Build and Archive the App
-        run: |
-          xcodebuild -workspace iosApp/iosApp.xcworkspace \
-                     -scheme iosApp \
-                     -sdk iphoneos \
-                     -configuration Debug \
-                     -archivePath build/iosApp.xcarchive \
-                     -allowProvisioningUpdates \
-                     PRODUCT_BUNDLE_IDENTIFIER=org.weatherapp.project.weather-app \
-                     PRODUCT_NAME=iosApp \
-                     clean archive
-
-      - name: Export the .ipa
-        run: |
-          xcodebuild -exportArchive \
-                     -archivePath build/iosApp.xcarchive \
-                     -exportOptionsPlist iosApp/ExportOptions.plist \
-                     -exportPath build/iosApp \
-                     -allowProvisioningUpdates
+      - name: Install CocoaPods
+        run: pod install
 
       - name: Install Firebase CLI
         run: curl -sL https://firebase.tools | bash
 
-      - name: Upload iOS .ipa to Firebase App Distribution
+      - name: Build IPA with xcodebuild
         run: |
-          firebase appdistribution:distribute build/iosApp/iosApp.ipa \
+          xcodebuild -workspace iosApp/iosApp.xcworkspace \
+            -scheme iosApp \
+            -sdk iphoneos \
+            -configuration Debug \
+            -archivePath $PWD/build/iosApp.xcarchive \
+            archive
+
+          xcodebuild -exportArchive \
+            -archivePath $PWD/build/iosApp.xcarchive \
+            -exportOptionsPlist iosApp/exportOptions.plist \
+            -exportPath $PWD/build/export
+
+      - name: Upload to Firebase App Distribution
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          firebase appdistribution:distribute build/export/iosApp.ipa \
             --app ${{ secrets.FIREBASE_IOS_APP_ID }} \
             --testers shashankhr018@gmail.com \
-            --token ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Upload IPA and dSYMs as Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ipa-and-symbols
+          path: |
+            build/export/iosApp.ipa
+            build/export/iosApp.app.dSYM.zip
