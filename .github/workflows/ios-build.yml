@@ -28,9 +28,13 @@ jobs:
         with: 
             xcode-version: latest-stable
 
+      - name: Clean DerivedData
+        run: rm -rf ~/Library/Developer/Xcode/DerivedData
+
       - name: Install CocoaPods
         run: |
           cd iosApp
+          pod repo update
           pod install
 
       - name: Install Firebase CLI
