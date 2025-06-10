@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5087E1B86FD238AF4471BD51 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C31B245E91189ACD36310AC /* Pods_iosApp.framework */; };
 		BD419A0D2DF2020900B268A4 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BD419A0C2DF2020900B268A4 /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
