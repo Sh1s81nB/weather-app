@@ -29,7 +29,9 @@ jobs:
             xcode-version: latest-stable
 
       - name: Install CocoaPods
-        run: pod install
+        run: |
+          cd iosApp
+          pod install
 
       - name: Install Firebase CLI
         run: curl -sL https://firebase.tools | bash
