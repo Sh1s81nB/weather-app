@@ -49,7 +49,7 @@ jobs:
             -archivePath $PWD/build/iosApp.xcarchive \
             -allowProvisioningUpdates \
             PRODUCT_BUNDLE_IDENTIFIER=org.weatherapp.project.weather-app \
-            PRODUCT_NAME=iosApp \
+            PRODUCT_NAME=WeatherAppiOS \
             clean archive
 
           xcodebuild -exportArchive \
