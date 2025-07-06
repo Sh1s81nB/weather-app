@@ -65,6 +65,7 @@ kotlin {
             implementation(libs.bundles.koin.common)
             implementation(libs.bundles.serialization)
             implementation(libs.bundles.datastore.common)
+            implementation(libs.navigation.compose)
         }
         iosMain.dependencies {
             implementation("app.cash.sqldelight:native-driver:2.0.2")

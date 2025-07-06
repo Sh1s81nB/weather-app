@@ -1,6 +1,7 @@
 package org.weather_app.project.features.weather.navigation
 
 import androidx.navigation.NavController
+import androidx.navigation.navDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
@@ -21,7 +22,14 @@ fun NavGraphBuilder.weatherScreen(
     navigateToWeatherHistory: () -> Unit,
     navigateToLanguageScreen: () -> Unit
 ) {
-    composable(WEATHER_SCREEN_ROUTE) {
+    composable(
+        WEATHER_SCREEN_ROUTE,
+        deepLinks = listOf(
+            navDeepLink {
+                uriPattern = "https://www.weatherapp.com/weather"
+            }
+        )
+    ) {
         WeatherScreenRoute(
             viewModel = koinViewModel(),
             navigateToWeatherHistory = navigateToWeatherHistory,
