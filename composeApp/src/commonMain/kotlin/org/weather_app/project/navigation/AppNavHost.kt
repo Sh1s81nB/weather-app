@@ -50,7 +50,7 @@ fun AppNavHost(
             modifier = Modifier.fillMaxSize(),
             navController = navController,
             startDestination = when(sessionManager.initialScreen){
-                InitialScreen.Language -> "$languageRoute/{$paramShouldNavigateBack}"
+                InitialScreen.Language -> "$languageRoute/false"
                 InitialScreen.Permission -> permissionRoute
                 else -> WEATHER_SCREEN_ROUTE
             }
